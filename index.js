@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express()
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const userRoutes = require('./view/user.routes')
 
 app.use(express.json())
@@ -11,18 +13,18 @@ app.get('/', (req, res) => {
     res.send('Welcome to E-commerce App')
 })
 
-const uri = "mongodb+srv://aamirsheikh0008_db_user:xXCpwHSneTAW9aQd@cluster0.kuwcezg.mongodb.net/?appName=Cluster0"
+const uri = process.env.SECRET_KEY
 
 mongoose.connect(uri).then(() => {
-    console.log('Connected to Database successfully');
+    console.log('Connected to ecom-app database successfully');
     
 }).catch((err) => {
     console.log('Error connecting to Database:', err);
 })
 
-const PORT = 3000
+const port = process.env.PORT
 
-app.listen(PORT, () =>{
-    console.log(`The server is running on port ${PORT}`);
+app.listen(port, () =>{
+    console.log(`The server is running on port ${port}`);
     
 })
