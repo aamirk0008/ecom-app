@@ -4,14 +4,15 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const userRoutes = require('./view/user.routes')
+const userRoutes = require('./view/user.view')
 
 app.use(express.json())
-app.use(userRoutes)
 
 app.get('/', (req, res) => {
     res.send('Welcome to E-commerce App')
 })
+
+app.use('/v1', userRoutes)
 
 const uri = process.env.SECRET_KEY
 

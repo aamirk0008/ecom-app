@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Your Email is not correct"] // standard email format
     },
+     password: {
+        type: String,
+        required: true,
+        match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/ // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+    },
     address: {
         type: String,
         required: true
@@ -37,11 +42,6 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['user', 'admin']
-    },
-    password: {
-        type: String,
-        required: true,
-        match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/ // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
     }
 })
 
