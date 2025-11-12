@@ -1,3 +1,4 @@
+const { get } = require('mongoose')
 const User = require('../model/user.model')
 
 const signup = async (req, res) => {
@@ -56,7 +57,92 @@ const login = async (req, res) => {
     }
 }
 
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find()
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                message: 'No users found'
+            })
+        }
+
+        res.status(200).json({
+            message: 'Users retrieved successfully',
+            users: users
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })  
+    }
+}
+
+
+const getById = async (req, res) => {
+    try {
+        const userId = req.params.id
+
+        const user = await User.findOne(
+            {_id: userId}
+        )
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            })
+        }
+
+        res.status(200).json({
+            message: 'User retrieved successfully',
+            user: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
+const updatePass = async (req,res) => {
+    try {
+        const id = req.params.id
+        const {password, newPassword} = req.body
+
+        const user = await User.findOne(
+            {_id: id}
+        )
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            })
+        }
+
+        if (password !== user.password) {
+            return res.status(401).json({
+                message: 'Invalid password'
+            })
+        }   
+
+        user.password = newPassword
+        await user.save()
+        res.status(200).json({
+            message: 'Password updated successfully',
+            user: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        })
+    }
+}
+
 module.exports = {
     signup,
-    login
+    login,
+    getAllUsers,
+    getById,
+    updatePass
 }
