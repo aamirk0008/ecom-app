@@ -6,6 +6,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 const userRoutes = require('./view/user.view')
 
+const productRoutes = require('./view/product.view')
+
+
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -13,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/v1', userRoutes)
+app.use('/v1', productRoutes)
 
 const uri = process.env.SECRET_KEY
 
