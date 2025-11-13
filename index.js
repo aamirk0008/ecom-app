@@ -10,6 +10,8 @@ const productRoutes = require('./view/product.view')
 
 const cartRoutes = require('./view/cart.view')
 
+const orderRoutes = require('./view/order.view')
+
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -19,6 +21,7 @@ app.get('/', (req, res) => {
 app.use('/v1', userRoutes)
 app.use('/v1', productRoutes)
 app.use('/v1', cartRoutes)
+app.use('/v1', orderRoutes)
 
 const uri = process.env.SECRET_KEY
 
