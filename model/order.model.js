@@ -25,7 +25,8 @@ const orderSchema = new mongoose.Schema({
     ],
     totalAmount: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     shippingAddress: {
         type: String,
